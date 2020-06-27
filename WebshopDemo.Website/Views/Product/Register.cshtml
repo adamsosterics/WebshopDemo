@@ -1,0 +1,29 @@
+﻿@model WebshopDemo.ProductCatalog.Commands.RegisterNewProduct.RegisterNewProductCommand
+
+@{
+    ViewData["Title"] = "Register new product";
+}
+
+<div class="text-center">
+    <form method="post">
+        <table>
+            <tr>
+                <td>
+                    Name:
+                </td>
+                <td>
+                    <input type="text" name="Name" value="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Description:
+                </td>
+                <td>
+                    <input type="text" name="Description" value="">
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="Register" class="submitButton">
+    </form>
+</div>

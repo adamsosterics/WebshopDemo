@@ -1,0 +1,45 @@
+﻿@model WebshopDemo.ProductCatalog.Queries.AvailableProducts.AvailableProducts
+@{
+    ViewData["Title"] = "Product Catalog";
+}
+
+    <div class="text-center">
+        <h1 class="display-4">Product Catalog</h1>
+        <p>Here are all the products we sell.</p>
+        <a href="/Product/Register">Register new product...</a>
+        @if (Model.Products.Any())
+        {
+
+            <table>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                </tr>
+                @foreach (var item in Model.Products)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            <a href="/Product/Edit/@item.Id">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+
+        }
+    </div>
