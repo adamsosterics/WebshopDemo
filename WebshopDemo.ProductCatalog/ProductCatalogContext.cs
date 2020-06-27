@@ -3,14 +3,18 @@ using WebshopDemo.ProductCatalog.Domain;
 
 namespace WebshopDemo.ProductCatalog
 {
-    class ProductCatalogContext : DbContext
+    public class ProductCatalogContext : DbContext
     {
-        public DbSet<Product> Products { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public ProductCatalogContext()
         {
-            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSqlLocalDB;Initial Catalog=WebshopDemo_ProductCatalog;Integrated Security=True");
         }
+
+        public ProductCatalogContext(DbContextOptions<ProductCatalogContext> options)
+            : base(options)
+        {
+        }
+
+        public DbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

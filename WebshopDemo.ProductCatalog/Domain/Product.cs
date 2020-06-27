@@ -2,7 +2,7 @@
 
 namespace WebshopDemo.ProductCatalog.Domain
 {
-    class Product
+    public class Product
     {
         public Product(Guid id, string name, string description)
         {
