@@ -20,12 +20,14 @@ namespace WebshopDemo.ProductCatalog.Domain
         public override bool Equals(object obj)
         {
             return obj is Product product &&
-                   Id.Equals(product.Id);
+                   Id.Equals(product.Id) &&
+                   Name == product.Name &&
+                   Description == product.Description;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id);
+            return HashCode.Combine(Id, Name, Description);
         }
     }
 }

@@ -7,7 +7,7 @@ using WebshopDemo.ProductCatalog.Events;
 
 namespace WebshopDemo.ProductCatalog.Commands.RegisterNewProduct
 {
-    class RegisterNewProductHandler : IRequestHandler<RegisterNewProductCommand, Guid>
+    public class RegisterNewProductHandler : IRequestHandler<RegisterNewProductCommand, Guid>
     {
         private readonly IMediator mediator;
         private readonly ProductCatalogContext db;
