@@ -12,13 +12,22 @@ namespace WebshopDemo.Sales.UnitTests
     [TestFixture]
     class SetPriceHandlerTests
     {
+        private SetPriceHandler handler;
+        private Mock<ProductRepository> repoMock;
+
+        [SetUp]
+        public void Init()
+        {
+            repoMock = new Mock<ProductRepository>();
+            handler = new SetPriceHandler(repoMock.Object);
+        }
+
         [Test]
         public async Task ShouldSetPriceOfProduct()
         {
             var productID = Guid.NewGuid();
             var amount = 5m;
             var currency = "euro";
-            var repoMock = new Mock<ProductRepository>();
             var product = new Product(productID);
             product.Price = new Price(amount, currency);
 
@@ -26,8 +35,6 @@ namespace WebshopDemo.Sales.UnitTests
 
             repoMock.Setup(x => x.GetByID(productID)).Returns(new Product(productID));
             repoMock.Setup(x => x.Save(It.IsAny<Product>())).Callback<Product>(x => savedProduct = x);
-
-            var handler = new SetPriceHandler(repoMock.Object);
 
             await handler.Handle(new SetPriceCommand { ProductID = productID, ProductPrice = new SetPriceCommand.Price { Amount = amount, Currency = currency } }, CancellationToken.None);
 
@@ -39,11 +46,8 @@ namespace WebshopDemo.Sales.UnitTests
         public void ShouldThrowExceptionOnNonexistingProduct()
         {
             var nonExistingProductID = Guid.NewGuid();
-            var repoMock = new Mock<ProductRepository>();
             var exception = new ProductNotFoundException();
             repoMock.Setup(x => x.GetByID(nonExistingProductID)).Throws(exception);
-
-            var handler = new SetPriceHandler(repoMock.Object);
 
             handler.Invoking(async x => 
                 await x.Handle(new SetPriceCommand { ProductID = nonExistingProductID, ProductPrice = new SetPriceCommand.Price { Amount = 1m, Currency = "euro" } }, CancellationToken.None))
