@@ -5,7 +5,7 @@ using WebshopDemo.Sales.Domain;
 
 namespace WebshopDemo.Sales
 {
-    class ProductRepositoryImp : DbContext, ProductRepository
+    public class ProductRepositoryImp : DbContext, ProductRepository
     {
         public ProductRepositoryImp()
         {
