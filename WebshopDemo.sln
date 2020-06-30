@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebshopDemo.Sales", "Websho
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebshopDemo.Sales.UnitTests", "WebshopDemo.Sales.UnitTests\WebshopDemo.Sales.UnitTests.csproj", "{F889E66D-4AAE-4AA8-87F3-C6F6950765A8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebshopDemo.Sales.IntegrationTests", "WebshopDemo.Sales.IntegrationTests\WebshopDemo.Sales.IntegrationTests.csproj", "{2FB02A45-65F3-449E-9E84-2C27738250F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{F889E66D-4AAE-4AA8-87F3-C6F6950765A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F889E66D-4AAE-4AA8-87F3-C6F6950765A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F889E66D-4AAE-4AA8-87F3-C6F6950765A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FB02A45-65F3-449E-9E84-2C27738250F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FB02A45-65F3-449E-9E84-2C27738250F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FB02A45-65F3-449E-9E84-2C27738250F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FB02A45-65F3-449E-9E84-2C27738250F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

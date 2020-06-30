@@ -10,8 +10,10 @@ namespace WebshopDemo.Sales.Domain
             Currency = currency;
         }
 
-        public decimal Amount { get; }
-        public string Currency { get; }
+        private Price() { }
+
+        public decimal Amount { get; private set; }
+        public string Currency { get; private set; }
 
         public override bool Equals(object obj)
         {

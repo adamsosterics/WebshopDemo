@@ -9,7 +9,9 @@ namespace WebshopDemo.Sales.Domain
             Id = id;
         }
 
-        public Guid Id { get; }
+        private Product() { }
+
+        public Guid Id { get; private set; }
         public Price Price { get; internal set; }
 
         public override bool Equals(object obj)
