@@ -1,4 +1,3 @@
-using MediatR;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -15,9 +14,8 @@ namespace WebshopDemo.Sales.UnitTests
         public async Task ShouldAddNewProduct()
         {
             var productID = Guid.NewGuid();
-            var mediatorMock = new Mock<IMediator>();
             var repoMock = new Mock<ProductRepository>();
-            var handler = new ProductRegisteredHandler(mediatorMock.Object, repoMock.Object);
+            var handler = new ProductRegisteredHandler(repoMock.Object);
 
             var product = new Product(productID);
 
