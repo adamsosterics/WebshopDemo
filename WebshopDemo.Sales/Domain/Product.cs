@@ -10,6 +10,7 @@ namespace WebshopDemo.Sales.Domain
         }
 
         public Guid Id { get; }
+        public Price Price { get; internal set; }
 
         public override bool Equals(object obj)
         {
@@ -20,6 +21,11 @@ namespace WebshopDemo.Sales.Domain
         public override int GetHashCode()
         {
             return HashCode.Combine(Id);
+        }
+
+        public void SetPrice(Price price)
+        {
+            Price = price;
         }
     }
 }
