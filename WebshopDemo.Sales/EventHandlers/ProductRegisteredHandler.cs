@@ -8,12 +8,10 @@ namespace WebshopDemo.Sales.EventHandlers
 {
     public class ProductRegisteredHandler : INotificationHandler<ProductRegistered>
     {
-        private readonly IMediator mediator;
         private readonly ProductRepository productRepository;
 
-        public ProductRegisteredHandler(IMediator mediator, ProductRepository productRepository)
+        public ProductRegisteredHandler(ProductRepository productRepository)
         {
-            this.mediator = mediator;
             this.productRepository = productRepository;
         }
 
