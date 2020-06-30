@@ -1,10 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using WebshopDemo.ProductCatalog.Commands.RegisterNewProduct;
 using WebshopDemo.ProductCatalog.Queries.AvailableProducts;
+using WebshopDemo.Sales.Commands.SetPrice;
 using WebshopDemo.Website.Models;
 
 namespace WebshopDemo.Website.Controllers
@@ -38,9 +40,16 @@ namespace WebshopDemo.Website.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Privacy()
+        public IActionResult SetPrice(Guid id)
         {
-            return View();
+            return View(new SetPriceCommand { ProductID = id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SetPrice(SetPriceCommand vm)
+        {
+            await mediator.Send(vm);
+            return RedirectToAction(nameof(Index));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

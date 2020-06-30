@@ -12,7 +12,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebshopDemo.ProductCatalog.Commands.RegisterNewProduct;
+using WebshopDemo.Sales;
 using WebshopDemo.Sales.Commands.SetPrice;
+using WebshopDemo.Sales.Domain;
 
 namespace WebshopDemo.Website
 {
@@ -33,6 +35,8 @@ namespace WebshopDemo.Website
                 options.UseSqlServer(Configuration.GetConnectionString("ProductCatalogConnection")));
             services.AddDbContext<Sales.ProductRepositoryImp>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("SalesConnection")));
+
+            services.AddTransient(typeof(ProductRepository), typeof(ProductRepositoryImp));
 
             services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
             services.AddMediatR(typeof(RegisterNewProductCommand).GetTypeInfo().Assembly);
