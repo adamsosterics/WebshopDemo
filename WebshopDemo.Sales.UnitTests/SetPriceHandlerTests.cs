@@ -34,5 +34,23 @@ namespace WebshopDemo.Sales.UnitTests
             repoMock.Verify(x => x.Save(product), Times.Once);
             savedProduct.Price.Should().Be(product.Price);
         }
+
+        [Test]
+        public void ShouldThrowExceptionOnNonexistingProduct()
+        {
+            var nonExistingProductID = Guid.NewGuid();
+            var repoMock = new Mock<ProductRepository>();
+            var exception = new ProductNotFoundException();
+            repoMock.Setup(x => x.GetByID(nonExistingProductID)).Throws(exception);
+
+            var handler = new SetPriceHandler(repoMock.Object);
+
+            handler.Invoking(async x => 
+                await x.Handle(new SetPriceCommand { ProductID = nonExistingProductID, ProductPrice = new SetPriceCommand.Price { Amount = 1m, Currency = "euro" } }, CancellationToken.None))
+                .Should()
+                .Throw<SetPriceException>()
+                .Where(x => (Guid)x.Data["ProductID"] == nonExistingProductID)
+                .WithInnerException<ProductNotFoundException>();
+        }
     }
 }
