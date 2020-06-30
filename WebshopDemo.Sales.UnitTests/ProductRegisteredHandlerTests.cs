@@ -11,12 +11,6 @@ namespace WebshopDemo.Sales.UnitTests
 {
     public class ProductRegisteredHandlerTests
     {
-        [SetUp]
-        public void Setup()
-        {
-
-        }
-
         [Test]
         public async Task ShouldAddNewProduct()
         {
