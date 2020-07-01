@@ -9,7 +9,7 @@ namespace WebshopDemo.Sales.IntegrationTests
 {
     public class ProductRepositoryImpTests
     {
-        private ProductRepositoryImp repo;
+        private SalesContext repo;
 
         [SetUp]
         public void Setup()
@@ -18,8 +18,8 @@ namespace WebshopDemo.Sales.IntegrationTests
                .AddJsonFile("appsettings.json")
                .Build();
             var connectionString = configBuilder.GetConnectionString("SalesConnection");
-            var optionsBuilder = new DbContextOptionsBuilder<ProductRepositoryImp>().UseSqlServer(connectionString);
-            repo = new ProductRepositoryImp(optionsBuilder.Options);
+            var optionsBuilder = new DbContextOptionsBuilder<SalesContext>().UseSqlServer(connectionString);
+            repo = new SalesContext(optionsBuilder.Options);
             repo.Database.ExecuteSqlRaw("TRUNCATE TABLE Products");
         }
 

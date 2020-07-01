@@ -33,10 +33,10 @@ namespace WebshopDemo.Website
             services.AddControllersWithViews();
             services.AddDbContext<ProductCatalog.ProductCatalogContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ProductCatalogConnection")));
-            services.AddDbContext<Sales.ProductRepositoryImp>(options =>
+            services.AddDbContext<Sales.SalesContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("SalesConnection")));
 
-            services.AddTransient(typeof(ProductRepository), typeof(ProductRepositoryImp));
+            services.AddTransient(typeof(ProductRepository), typeof(SalesContext));
 
             services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
             services.AddMediatR(typeof(RegisterNewProductCommand).GetTypeInfo().Assembly);

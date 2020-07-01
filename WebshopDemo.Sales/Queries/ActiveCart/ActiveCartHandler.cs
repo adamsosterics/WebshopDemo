@@ -7,9 +7,9 @@ namespace WebshopDemo.Sales.Queries.ActiveCart
 {
     public class ActiveCartHandler : IRequestHandler<ActiveCartQuery, ActiveCart>
     {
-        private readonly ProductRepositoryImp db;
+        private readonly SalesContext db;
 
-        public ActiveCartHandler(ProductRepositoryImp db)
+        public ActiveCartHandler(SalesContext db)
         {
             this.db = db;
         }

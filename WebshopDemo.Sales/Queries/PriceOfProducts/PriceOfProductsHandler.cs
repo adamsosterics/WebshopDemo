@@ -10,9 +10,9 @@ namespace WebshopDemo.Sales.Queries.PriceOfProducts
 {
     public class PriceOfProductsHandler : IRequestHandler<PriceOfProductsQuery, PriceOfProducts>
     {
-        private readonly ProductRepositoryImp db;
+        private readonly SalesContext db;
 
-        public PriceOfProductsHandler(ProductRepositoryImp db)
+        public PriceOfProductsHandler(SalesContext db)
         {
             this.db = db;
         }

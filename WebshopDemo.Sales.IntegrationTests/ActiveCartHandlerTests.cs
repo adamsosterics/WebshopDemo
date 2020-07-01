@@ -20,8 +20,8 @@ namespace WebshopDemo.Sales.IntegrationTests
                .AddJsonFile("appsettings.json")
                .Build();
             var connectionString = configBuilder.GetConnectionString("SalesConnection");
-            var optionsBuilder = new DbContextOptionsBuilder<ProductRepositoryImp>().UseSqlServer(connectionString);
-            var db = new ProductRepositoryImp(optionsBuilder.Options);
+            var optionsBuilder = new DbContextOptionsBuilder<SalesContext>().UseSqlServer(connectionString);
+            var db = new SalesContext(optionsBuilder.Options);
 
             var cartID = Guid.NewGuid();
 

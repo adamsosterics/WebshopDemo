@@ -5,13 +5,13 @@ using WebshopDemo.Sales.Domain;
 
 namespace WebshopDemo.Sales
 {
-    public class ProductRepositoryImp : DbContext, ProductRepository
+    public class SalesContext : DbContext, ProductRepository
     {
-        public ProductRepositoryImp()
+        public SalesContext()
         {
         }
 
-        public ProductRepositoryImp(DbContextOptions<ProductRepositoryImp> options)
+        public SalesContext(DbContextOptions<SalesContext> options)
             : base(options)
         {
         }
