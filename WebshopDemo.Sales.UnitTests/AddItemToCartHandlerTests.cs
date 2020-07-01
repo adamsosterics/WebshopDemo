@@ -46,5 +46,30 @@ namespace WebshopDemo.Sales.UnitTests
             item.ProductID.Should().Be(pID);
             item.CurrentPrice.Should().Be(price);
         }
+
+        [Test]
+        public void ShouldThrowExceptionWhenAddingNonexistingItem()
+        {
+            var cartRepo = new Mock<CartRepository>();
+            var productRepo = new Mock<ProductRepository>();
+
+            Cart savedCart = null;
+            var cartID = Guid.NewGuid();
+            var pID = Guid.NewGuid();
+
+            cartRepo.Setup(x => x.GetByID(cartID)).Returns(new Cart(cartID));
+            cartRepo.Setup(x => x.Save(It.IsAny<Cart>())).Callback<Cart>(x => savedCart = x);
+
+            var exception = new ProductNotFoundException();
+            productRepo.Setup(x => x.GetByID(pID)).Throws(exception);
+
+            var handler = new AddItemToCartHandler(cartRepo.Object, productRepo.Object);
+
+            handler.Invoking(async x => await x.Handle(new AddItemToCartCommand { CartID = cartID, ProductID = pID }, CancellationToken.None))
+                .Should()
+                .Throw<AddItemToCartException>()
+                .Where(x => (Guid)x.Data["ProductID"] == pID && (Guid)x.Data["CartID"] == cartID)
+                .WithInnerException<ProductNotFoundException>();
+        }
     }
 }

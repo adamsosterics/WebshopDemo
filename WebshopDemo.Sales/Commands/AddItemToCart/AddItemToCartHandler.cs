@@ -19,11 +19,21 @@ namespace WebshopDemo.Sales.Commands.AddItemToCart
 
         public Task<Unit> Handle(AddItemToCartCommand request, CancellationToken cancellationToken)
         {
-            var cart = cartRepo.GetByID(request.CartID);
-            var product = productRepo.GetByID(request.ProductID);
-            cart.AddItem(new Item(request.ProductID, product.Price));
-            cartRepo.Save(cart);
-            return Task.FromResult(new Unit());
+            try
+            {
+                var cart = cartRepo.GetByID(request.CartID);
+                var product = productRepo.GetByID(request.ProductID);
+                cart.AddItem(new Item(request.ProductID, product.Price));
+                cartRepo.Save(cart);
+                return Task.FromResult(new Unit());
+            }
+            catch (ProductNotFoundException ex)
+            {
+                var exc = new AddItemToCartException("Product not found", ex);
+                exc.Data.Add("ProductID", request.ProductID);
+                exc.Data.Add("CartID", request.CartID);
+                throw exc;
+            }
         }
     }
 }
