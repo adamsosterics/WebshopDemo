@@ -27,6 +27,11 @@ namespace WebshopDemo.Sales.Domain
             }
         }
 
+        public void RemoveItem(Guid productID)
+        {
+            Items.Remove(productID);
+        }
+
         public override bool Equals(object obj)
         {
             return obj is Cart cart &&
