@@ -8,16 +8,23 @@ namespace WebshopDemo.Sales.Domain
         public Cart(Guid id)
         {
             Id = id;
-            Items = new List<Item>();
+            Items = new Dictionary<Guid, Item>();
         }
 
         public Guid Id { get; }
         public CartState State { get; internal set; }
-        public List<Item> Items { get; internal set; }
+        public Dictionary<Guid, Item> Items { get; internal set; }
 
         public void AddItem(Item item)
         {
-            Items.Add(item);
+            if (Items.ContainsKey(item.ProductID))
+            {
+                Items[item.ProductID] = Items[item.ProductID].AddQuantity(item.Quantity);
+            }
+            else
+            {
+                Items.Add(item.ProductID, item);
+            }
         }
 
         public override bool Equals(object obj)
