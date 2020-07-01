@@ -15,12 +15,22 @@ namespace WebshopDemo.Sales.UnitTests
     [TestFixture]
     class AddItemToCartHandlerTests
     {
+        private Mock<CartRepository> cartRepo;
+        private Mock<ProductRepository> productRepo;
+        private AddItemToCartHandler handler;
+
+        [SetUp]
+        public void Init()
+        {
+            cartRepo = new Mock<CartRepository>();
+            productRepo = new Mock<ProductRepository>();
+
+            handler = new AddItemToCartHandler(cartRepo.Object, productRepo.Object);
+        }
+
         [Test]
         public async Task ShouldAddExistingItemToCart()
         {
-            var cartRepo = new Mock<CartRepository>();
-            var productRepo = new Mock<ProductRepository>();
-
             Cart savedCart = null;
             var cartID = Guid.NewGuid();
             var pID = Guid.NewGuid();
@@ -33,8 +43,6 @@ namespace WebshopDemo.Sales.UnitTests
 
             var cart = new Cart(cartID);
             cart.Items.Add(pID, new Item(pID, price));
-
-            var handler = new AddItemToCartHandler(cartRepo.Object, productRepo.Object);
 
             await handler.Handle(new AddItemToCartCommand { CartID = cartID, ProductID = pID }, CancellationToken.None);
 
@@ -50,9 +58,6 @@ namespace WebshopDemo.Sales.UnitTests
         [Test]
         public void ShouldThrowExceptionWhenAddingNonexistingItem()
         {
-            var cartRepo = new Mock<CartRepository>();
-            var productRepo = new Mock<ProductRepository>();
-
             Cart savedCart = null;
             var cartID = Guid.NewGuid();
             var pID = Guid.NewGuid();
@@ -62,8 +67,6 @@ namespace WebshopDemo.Sales.UnitTests
 
             var exception = new ProductNotFoundException();
             productRepo.Setup(x => x.GetByID(pID)).Throws(exception);
-
-            var handler = new AddItemToCartHandler(cartRepo.Object, productRepo.Object);
 
             handler.Invoking(async x => await x.Handle(new AddItemToCartCommand { CartID = cartID, ProductID = pID }, CancellationToken.None))
                 .Should()
@@ -75,9 +78,6 @@ namespace WebshopDemo.Sales.UnitTests
         [Test]
         public async Task ShouldBeAbleToAddSameProductMultipleTimes()
         {
-            var cartRepo = new Mock<CartRepository>();
-            var productRepo = new Mock<ProductRepository>();
-
             Cart savedCart = null;
             var cartID = Guid.NewGuid();
             var pID = Guid.NewGuid();
@@ -90,8 +90,6 @@ namespace WebshopDemo.Sales.UnitTests
 
             var cart = new Cart(cartID);
             cart.Items.Add(pID, new Item(pID, price, 2));
-
-            var handler = new AddItemToCartHandler(cartRepo.Object, productRepo.Object);
 
             await handler.Handle(new AddItemToCartCommand { CartID = cartID, ProductID = pID }, CancellationToken.None);
 
