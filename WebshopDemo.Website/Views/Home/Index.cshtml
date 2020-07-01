@@ -1,8 +1,31 @@
-﻿@{
+﻿@model WebshopDemo.Website.Models.ProductsModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>This is the page the customer sees.</p>
-</div>
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>This is the page the customer sees.</p>
+        @if (Model.Products.Any())
+        {
+
+            <table>
+                @foreach (var item in Model.Products)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price.Amount) @Html.DisplayFor(modelItem => item.Price.Currency)
+                        </td>
+                    </tr>
+                }
+            </table>
+
+        }
+    </div>

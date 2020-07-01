@@ -9,11 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebshopDemo.ProductCatalog"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebshopDemo.ProductCatalog.IntegrationTests", "WebshopDemo.ProductCatalog.IntegrationTests\WebshopDemo.ProductCatalog.IntegrationTests.csproj", "{F5EED52F-2AFC-4679-B310-C9B8FCF12DD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebshopDemo.Sales", "WebshopDemo.Sales\WebshopDemo.Sales.csproj", "{E84B8D4D-641D-4C5A-ACF9-705248F73583}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebshopDemo.Sales", "WebshopDemo.Sales\WebshopDemo.Sales.csproj", "{E84B8D4D-641D-4C5A-ACF9-705248F73583}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebshopDemo.Sales.UnitTests", "WebshopDemo.Sales.UnitTests\WebshopDemo.Sales.UnitTests.csproj", "{F889E66D-4AAE-4AA8-87F3-C6F6950765A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebshopDemo.Sales.UnitTests", "WebshopDemo.Sales.UnitTests\WebshopDemo.Sales.UnitTests.csproj", "{F889E66D-4AAE-4AA8-87F3-C6F6950765A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebshopDemo.Sales.IntegrationTests", "WebshopDemo.Sales.IntegrationTests\WebshopDemo.Sales.IntegrationTests.csproj", "{2FB02A45-65F3-449E-9E84-2C27738250F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebshopDemo.Sales.IntegrationTests", "WebshopDemo.Sales.IntegrationTests\WebshopDemo.Sales.IntegrationTests.csproj", "{2FB02A45-65F3-449E-9E84-2C27738250F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebshopDemo.Website.UnitTests", "WebshopDemo.Website.UnitTests\WebshopDemo.Website.UnitTests.csproj", "{7BDF5635-0B98-4E3D-9E92-20F6A35876E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{2FB02A45-65F3-449E-9E84-2C27738250F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FB02A45-65F3-449E-9E84-2C27738250F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FB02A45-65F3-449E-9E84-2C27738250F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BDF5635-0B98-4E3D-9E92-20F6A35876E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BDF5635-0B98-4E3D-9E92-20F6A35876E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BDF5635-0B98-4E3D-9E92-20F6A35876E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BDF5635-0B98-4E3D-9E92-20F6A35876E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
