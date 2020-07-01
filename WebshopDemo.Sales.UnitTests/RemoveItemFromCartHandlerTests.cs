@@ -32,7 +32,7 @@ namespace WebshopDemo.Sales.UnitTests
             var cartID = Guid.NewGuid();
             var pID = Guid.NewGuid();
 
-            cartRepo.Setup(x => x.GetByID(cartID)).Returns(new Cart(cartID) { Items = new Dictionary<Guid, Item> { { pID, new Item(pID, new Price(10m, "EUR")) } } });
+            cartRepo.Setup(x => x.GetByID(cartID)).Returns(new Cart(cartID) { Items = new List<Item> { new Item(pID, new Price(10m, "EUR")) } });
             cartRepo.Setup(x => x.Save(It.IsAny<Cart>())).Callback<Cart>(x => savedCart = x);
 
             await handler.Handle(new RemoveItemFromCartCommand { CartID = cartID, ProductID = pID }, CancellationToken.None);

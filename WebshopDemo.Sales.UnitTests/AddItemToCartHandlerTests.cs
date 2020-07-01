@@ -42,7 +42,7 @@ namespace WebshopDemo.Sales.UnitTests
             productRepo.Setup(x => x.GetByID(pID)).Returns(new Product(pID) { Price = price });
 
             var cart = new Cart(cartID);
-            cart.Items.Add(pID, new Item(pID, price));
+            cart.Items.Add(new Item(pID, price));
 
             await handler.Handle(new AddItemToCartCommand { CartID = cartID, ProductID = pID }, CancellationToken.None);
 
@@ -51,8 +51,8 @@ namespace WebshopDemo.Sales.UnitTests
             savedCart.Should().Be(cart);
             savedCart.Items.Count.Should().Be(1);
             var item = savedCart.Items.First();
-            item.Value.ProductID.Should().Be(pID);
-            item.Value.CurrentPrice.Should().Be(price);
+            item.ProductID.Should().Be(pID);
+            item.CurrentPrice.Should().Be(price);
         }
 
         [Test]
@@ -83,13 +83,13 @@ namespace WebshopDemo.Sales.UnitTests
             var pID = Guid.NewGuid();
             var price = new Price(10m, "EUR");
 
-            cartRepo.Setup(x => x.GetByID(cartID)).Returns(new Cart(cartID) { Items = new Dictionary<Guid, Item> { { pID, new Item(pID, price) } } });
+            cartRepo.Setup(x => x.GetByID(cartID)).Returns(new Cart(cartID) { Items = new List<Item> { new Item(pID, price) } });
             cartRepo.Setup(x => x.Save(It.IsAny<Cart>())).Callback<Cart>(x => savedCart = x);
 
             productRepo.Setup(x => x.GetByID(pID)).Returns(new Product(pID) { Price = price });
 
             var cart = new Cart(cartID);
-            cart.Items.Add(pID, new Item(pID, price, 2));
+            cart.Items.Add(new Item(pID, price, 2));
 
             await handler.Handle(new AddItemToCartCommand { CartID = cartID, ProductID = pID }, CancellationToken.None);
 
@@ -98,9 +98,9 @@ namespace WebshopDemo.Sales.UnitTests
             savedCart.Should().Be(cart);
             savedCart.Items.Count.Should().Be(1);
             var item = savedCart.Items.First();
-            item.Value.ProductID.Should().Be(pID);
-            item.Value.CurrentPrice.Should().Be(price);
-            item.Value.Quantity.Should().Be(2);
+            item.ProductID.Should().Be(pID);
+            item.CurrentPrice.Should().Be(price);
+            item.Quantity.Should().Be(2);
         }
     }
 }

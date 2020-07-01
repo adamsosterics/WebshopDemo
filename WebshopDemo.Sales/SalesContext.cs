@@ -47,6 +47,11 @@ namespace WebshopDemo.Sales
             modelBuilder.Entity<Product>().OwnsOne(x => x.Price);
 
             modelBuilder.Entity<Cart>().HasKey(c => c.Id);
+            modelBuilder.Entity<Cart>().HasMany(c => c.Items).WithOne();
+
+            modelBuilder.Entity<Item>().HasKey(i => i.ID);
+            modelBuilder.Entity<Item>().OwnsOne(i => i.CurrentPrice);
+            modelBuilder.Entity<Item>().ToTable("Items");
 
             base.OnModelCreating(modelBuilder);
         }

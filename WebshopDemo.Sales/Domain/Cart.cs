@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WebshopDemo.Sales.Domain
 {
@@ -8,28 +9,30 @@ namespace WebshopDemo.Sales.Domain
         public Cart(Guid id)
         {
             Id = id;
-            Items = new Dictionary<Guid, Item>();
+            Items = new List<Item>();
         }
 
         public Guid Id { get; }
         public CartState State { get; internal set; }
-        public Dictionary<Guid, Item> Items { get; internal set; }
+        public List<Item> Items { get; internal set; }
 
         public void AddItem(Item item)
         {
-            if (Items.ContainsKey(item.ProductID))
+            var itemInList = Items.FirstOrDefault(x => x.ProductID == item.ProductID);
+            if (itemInList != null)
             {
-                Items[item.ProductID] = Items[item.ProductID].AddQuantity(item.Quantity);
+                Items.Add(itemInList.AddQuantity(item.Quantity));
+                Items.Remove(itemInList);
             }
             else
             {
-                Items.Add(item.ProductID, item);
+                Items.Add(item);
             }
         }
 
         public void RemoveItem(Guid productID)
         {
-            Items.Remove(productID);
+            Items.RemoveAll(x => x.ProductID == productID);
         }
 
         public override bool Equals(object obj)

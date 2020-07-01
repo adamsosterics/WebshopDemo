@@ -5,6 +5,8 @@ namespace WebshopDemo.Sales.Domain
 {
     public class Item
     {
+        private Item() { }
+
         public Item(Guid productID, Price price) : this(productID, price, 1) { }
 
         public Item(Guid productID, Price price, int quantity)
@@ -14,9 +16,10 @@ namespace WebshopDemo.Sales.Domain
             Quantity = quantity;
         }
 
-        public Guid ProductID { get; }
-        public Price CurrentPrice { get; }
-        public int Quantity { get; }
+        public int ID { get; private set; }
+        public Guid ProductID { get; private set; }
+        public Price CurrentPrice { get; private set; }
+        public int Quantity { get; private set; }
 
         public Item AddQuantity(int quantity)
         {
