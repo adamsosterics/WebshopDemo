@@ -17,6 +17,7 @@ namespace WebshopDemo.Sales
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<Cart> Carts { get; set; }
 
         public void Add(Product product)
         {
@@ -44,6 +45,8 @@ namespace WebshopDemo.Sales
         {
             modelBuilder.Entity<Product>().HasKey(p => p.Id);
             modelBuilder.Entity<Product>().OwnsOne(x => x.Price);
+
+            modelBuilder.Entity<Cart>().HasKey(c => c.Id);
 
             base.OnModelCreating(modelBuilder);
         }
