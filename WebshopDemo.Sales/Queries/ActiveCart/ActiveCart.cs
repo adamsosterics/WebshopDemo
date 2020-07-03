@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WebshopDemo.Sales.Queries.ActiveCart
 {
@@ -7,6 +8,18 @@ namespace WebshopDemo.Sales.Queries.ActiveCart
     {
         public Guid CartID { get; set; }
         public List<Item> Items { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is ActiveCart cart &&
+                   CartID.Equals(cart.CartID) &&
+                   Items.SequenceEqual(cart.Items);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(CartID);
+        }
 
         public class Item
         {
@@ -44,17 +57,6 @@ namespace WebshopDemo.Sales.Queries.ActiveCart
             {
                 return HashCode.Combine(Amount, Currency);
             }
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is ActiveCart cart &&
-                   CartID.Equals(cart.CartID);
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(CartID);
         }
     }
 }
