@@ -37,6 +37,7 @@ namespace WebshopDemo.Website
                 options.UseSqlServer(Configuration.GetConnectionString("SalesConnection")));
 
             services.AddTransient(typeof(ProductRepository), typeof(SalesContext));
+            services.AddTransient<CartRepository>(x => new CartRepositoryImp(Configuration.GetConnectionString("SalesConnection")));
 
             services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
             services.AddMediatR(typeof(RegisterNewProductCommand).GetTypeInfo().Assembly);

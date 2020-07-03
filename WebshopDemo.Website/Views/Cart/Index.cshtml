@@ -1,25 +1,23 @@
-﻿@model WebshopDemo.Website.Models.ProductsModel
+﻿@model WebshopDemo.Sales.Queries.ActiveCart.ActiveCart
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "My Cart";
 }
 
     <div class="text-center">
-        <h1 class="display-4">Welcome</h1>
-        <p>This is the page the customer sees.</p>
-        <p><a href="/Cart">My Cart</a></p>
-        @if (Model.Products.Any())
+        <h1 class="display-4">My Cart</h1>
+        @if (Model.Items.Any())
         {
 
             <table>
-                @foreach (var item in Model.Products)
+                @foreach (var item in Model.Items)
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Name)
+                            @Html.DisplayFor(modelItem => item.Quantity) x
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Description)
+                            @Html.DisplayFor(modelItem => item.ProductID)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Price.Amount) @Html.DisplayFor(modelItem => item.Price.Currency)
