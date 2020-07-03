@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using MediatR;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -6,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WebshopDemo.Sales.Commands.SetPrice;
 using WebshopDemo.Sales.Domain;
+using WebshopDemo.Sales.Events;
 
 namespace WebshopDemo.Sales.UnitTests
 {
@@ -14,12 +16,14 @@ namespace WebshopDemo.Sales.UnitTests
     {
         private SetPriceHandler handler;
         private Mock<ProductRepository> repoMock;
+        private Mock<IMediator> mediatorMock;
 
         [SetUp]
         public void Init()
         {
             repoMock = new Mock<ProductRepository>();
-            handler = new SetPriceHandler(repoMock.Object);
+            mediatorMock = new Mock<IMediator>();
+            handler = new SetPriceHandler(repoMock.Object, mediatorMock.Object);
         }
 
         [Test]
@@ -27,7 +31,7 @@ namespace WebshopDemo.Sales.UnitTests
         {
             var productID = Guid.NewGuid();
             var amount = 5m;
-            var currency = "euro";
+            var currency = "EUR";
             var product = new Product(productID);
             product.Price = new Price(amount, currency);
 
@@ -55,6 +59,22 @@ namespace WebshopDemo.Sales.UnitTests
                 .Throw<SetPriceException>()
                 .Where(x => (Guid)x.Data["ProductID"] == nonExistingProductID)
                 .WithInnerException<ProductNotFoundException>();
+        }
+
+        [Test]
+        public async Task ShouldRaisePriceChangedEvent()
+        {
+            var productID = Guid.NewGuid();
+            var amount = 5m;
+            var currency = "EUR";
+
+            PriceChanged e = null;
+
+            repoMock.Setup(x => x.GetByID(productID)).Returns(new Product(productID) { Price = new Price(1m, "EUR") });
+            mediatorMock.Setup(x => x.Send(It.IsAny<PriceChanged>(), It.IsAny<CancellationToken>())).Callback<object, CancellationToken>((o, ct) => e = (PriceChanged)o);
+            await handler.Handle(new SetPriceCommand { ProductID = productID, ProductPrice = new SetPriceCommand.Price { Amount = amount, Currency = currency } }, CancellationToken.None);
+
+            e.ProductID.Should().Be(productID);
         }
     }
 }
