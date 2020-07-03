@@ -25,19 +25,21 @@ namespace WebshopDemo.Sales.Queries.ActiveCart
         {
             public Guid ProductID { get; set; }
             public int Quantity { get; set; }
-            public Price Price { get; set; }
+            public Price CurrentPrice { get; set; }
+            public Price LastPrice { get; set; }
 
             public override bool Equals(object obj)
             {
                 return obj is Item item &&
                        ProductID.Equals(item.ProductID) &&
                        Quantity == item.Quantity &&
-                       EqualityComparer<Price>.Default.Equals(Price, item.Price);
+                       EqualityComparer<Price>.Default.Equals(CurrentPrice, item.CurrentPrice) &&
+                       EqualityComparer<Price>.Default.Equals(LastPrice, item.LastPrice);
             }
 
             public override int GetHashCode()
             {
-                return HashCode.Combine(ProductID, Quantity, Price);
+                return HashCode.Combine(ProductID, Quantity, CurrentPrice, LastPrice);
             }
         }
 

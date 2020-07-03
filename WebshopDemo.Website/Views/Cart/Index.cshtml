@@ -20,7 +20,11 @@
                             @Html.DisplayFor(modelItem => item.ProductID)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Price.Amount) @Html.DisplayFor(modelItem => item.Price.Currency)
+                            @if (item.LastPrice != null)
+                            {
+                                <del>@Html.DisplayFor(modelItem => item.LastPrice.Amount) @Html.DisplayFor(modelItem => item.LastPrice.Currency)</del>
+                            }
+                            @Html.DisplayFor(modelItem => item.CurrentPrice.Amount) @Html.DisplayFor(modelItem => item.CurrentPrice.Currency)
                         </td>
                         <td>
                             <a href="/Cart/Remove/?productID=@item.ProductID">Remove item</a>

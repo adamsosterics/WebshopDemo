@@ -26,7 +26,7 @@ namespace WebshopDemo.Sales.Commands.SetPrice
                 product.SetPrice(new Price(request.ProductPrice.Amount, request.ProductPrice.Currency));
                 productRepository.Save(product);
 
-                await mediator.Send(new PriceChanged { ProductID = request.ProductID });
+                await mediator.Publish(new PriceChanged { ProductID = request.ProductID });
 
                 return new Unit();
             }

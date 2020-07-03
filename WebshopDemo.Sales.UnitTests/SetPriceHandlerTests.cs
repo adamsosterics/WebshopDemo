@@ -71,7 +71,7 @@ namespace WebshopDemo.Sales.UnitTests
             PriceChanged e = null;
 
             repoMock.Setup(x => x.GetByID(productID)).Returns(new Product(productID) { Price = new Price(1m, "EUR") });
-            mediatorMock.Setup(x => x.Send(It.IsAny<PriceChanged>(), It.IsAny<CancellationToken>())).Callback<object, CancellationToken>((o, ct) => e = (PriceChanged)o);
+            mediatorMock.Setup(x => x.Publish(It.IsAny<PriceChanged>(), It.IsAny<CancellationToken>())).Callback<object, CancellationToken>((o, ct) => e = (PriceChanged)o);
             await handler.Handle(new SetPriceCommand { ProductID = productID, ProductPrice = new SetPriceCommand.Price { Amount = amount, Currency = currency } }, CancellationToken.None);
 
             e.ProductID.Should().Be(productID);

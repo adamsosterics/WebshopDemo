@@ -29,10 +29,11 @@ namespace WebshopDemo.Sales.IntegrationTests
             var pID = Guid.NewGuid();
             var amount = 10m;
             var currency = "EUR";
+            var lastAmount = 5m;
 
             db.Database.ExecuteSqlRaw("TRUNCATE TABLE Items");
             db.Database.ExecuteSqlRaw("DELETE FROM Carts");
-            db.Carts.Add(new Cart(cartID) { State = CartState.Active, Items = new List<Item> { new Item(pID, new Price(amount, currency))} });
+            db.Carts.Add(new Cart(cartID) { State = CartState.Active, Items = new List<Item> { new Item(pID, currentPrice: new Price(amount, currency), lastPrice: new Price(lastAmount, currency), 1)} });
             db.SaveChanges();
 
             var handler = new ActiveCartHandler(db);
@@ -40,7 +41,16 @@ namespace WebshopDemo.Sales.IntegrationTests
             var expected = new ActiveCart
             {
                 CartID = cartID,
-                Items = new List<ActiveCart.Item> { new ActiveCart.Item { ProductID = pID, Quantity = 1, Price = new ActiveCart.Price { Amount = amount, Currency = currency } } }
+                Items = new List<ActiveCart.Item> 
+                { 
+                    new ActiveCart.Item 
+                    { 
+                        ProductID = pID, 
+                        Quantity = 1, 
+                        CurrentPrice = new ActiveCart.Price { Amount = amount, Currency = currency },
+                        LastPrice = new ActiveCart.Price { Amount = lastAmount, Currency = currency }
+                    } 
+                }
             };
 
             var response = await handler.Handle(new ActiveCartQuery(), CancellationToken.None);

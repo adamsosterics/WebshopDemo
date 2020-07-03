@@ -22,8 +22,18 @@ namespace WebshopDemo.Sales.Queries.ActiveCart
             var cart = db.Carts.Include(x => x.Items).First(x => x.State == Domain.CartState.Active);
             activeCart.CartID = cart.Id;
             activeCart.Items = new List<ActiveCart.Item>();
-            activeCart.Items.AddRange(cart.Items.Select(x => 
-                new ActiveCart.Item { ProductID = x.ProductID, Price = new ActiveCart.Price { Amount = x.CurrentPrice.Amount, Currency = x.CurrentPrice.Currency }, Quantity = x.Quantity }));
+            foreach (var item in cart.Items)
+            {
+                var acItem = new ActiveCart.Item();
+                acItem.ProductID = item.ProductID;
+                acItem.CurrentPrice = new ActiveCart.Price { Amount = item.CurrentPrice.Amount, Currency = item.CurrentPrice.Currency };
+                if (item.LastPrice != null)
+                {
+                    acItem.LastPrice = new ActiveCart.Price { Amount = item.LastPrice.Amount, Currency = item.LastPrice.Currency };
+                }
+                acItem.Quantity = item.Quantity;
+                activeCart.Items.Add(acItem);
+            }
             return Task.FromResult(activeCart);
         }
     }
