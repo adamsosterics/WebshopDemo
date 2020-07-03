@@ -51,6 +51,7 @@ namespace WebshopDemo.Sales
 
             modelBuilder.Entity<Item>().HasKey(i => i.ID);
             modelBuilder.Entity<Item>().OwnsOne(i => i.CurrentPrice);
+            modelBuilder.Entity<Item>().OwnsOne(i => i.LastPrice);
             modelBuilder.Entity<Item>().ToTable("Items");
 
             base.OnModelCreating(modelBuilder);

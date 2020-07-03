@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace WebshopDemo.Sales.Domain
 {
@@ -6,6 +7,7 @@ namespace WebshopDemo.Sales.Domain
     {
         void Add(Cart cart);
         Cart GetByID(Guid cartID);
+        List<Cart> GetCartsContainingProduct(Guid productID);
         void Save(Cart cart);
         
     }

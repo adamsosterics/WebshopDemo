@@ -35,6 +35,13 @@ namespace WebshopDemo.Sales.Domain
             Items.RemoveAll(x => x.ProductID == productID);
         }
 
+        public void ChangeItemPrice(Guid productID, Price newPrice)
+        {
+            var itemInList = Items.First(x => x.ProductID == productID);
+            Items.Add(itemInList.ChangePrice(newPrice));
+            Items.Remove(itemInList);
+        }
+
         public override bool Equals(object obj)
         {
             return obj is Cart cart &&

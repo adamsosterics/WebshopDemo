@@ -35,6 +35,11 @@ namespace WebshopDemo.Sales
             }
         }
 
+        public List<Cart> GetCartsContainingProduct(Guid productID)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Save(Cart cart)
         {
             using (var db = new SalesContext(options))
