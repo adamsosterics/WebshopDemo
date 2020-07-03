@@ -1,5 +1,4 @@
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using System;
@@ -58,6 +57,30 @@ namespace WebshopDemo.Sales.IntegrationTests
 
             rehydratedCart.Items.Count.Should().Be(2);
             rehydratedCart.Items.First(x => x.ProductID == productID).Quantity.Should().Be(2);
+        }
+
+        [Test]
+        public void GetCartsContaingProductsShouldWork()
+        {
+            var cartID1 = Guid.NewGuid();
+            var cartID2 = Guid.NewGuid();
+            var productID1 = Guid.NewGuid();
+            var productID2 = Guid.NewGuid();
+            var cart1 = new Cart(cartID1)
+            {
+                Items = new List<Item> { new Item(productID1, new Price(10m, "EUR")) }
+            };
+            var cart2 = new Cart(cartID2)
+            {
+                Items = new List<Item> { new Item(productID2, new Price(5m, "EUR")) }
+            };
+            repo.Add(cart1);
+            repo.Add(cart2);
+
+            var rehydratedCartList = repo.GetCartsContainingProduct(productID1);
+
+            rehydratedCartList.Count.Should().Be(1);
+            rehydratedCartList.First().Should().Be(cart1);
         }
     }
 }

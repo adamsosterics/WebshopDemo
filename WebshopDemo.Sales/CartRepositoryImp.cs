@@ -37,7 +37,10 @@ namespace WebshopDemo.Sales
 
         public List<Cart> GetCartsContainingProduct(Guid productID)
         {
-            throw new NotImplementedException();
+            using (var db = new SalesContext(options))
+            {
+                return db.Carts.Include(x => x.Items).Where(x => x.Items.Any(y => y.ProductID == productID)).ToList();
+            }
         }
 
         public void Save(Cart cart)
