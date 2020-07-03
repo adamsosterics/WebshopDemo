@@ -7,7 +7,7 @@ using WebshopDemo.Sales.Domain;
 
 namespace WebshopDemo.Sales.IntegrationTests
 {
-    public class ProductRepositoryImpTests
+    public class ProductRepositoryTests
     {
         private SalesContext repo;
 
