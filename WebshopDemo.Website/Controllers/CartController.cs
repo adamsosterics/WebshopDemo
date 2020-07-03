@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using WebshopDemo.Sales.Commands.AddItemToCart;
+using WebshopDemo.Sales.Commands.RemoveItemFromCart;
 using WebshopDemo.Sales.Queries.ActiveCart;
 using WebshopDemo.Website.Models;
 
@@ -35,6 +35,16 @@ namespace WebshopDemo.Website.Controllers
 
             var addItemCommand = new AddItemToCartCommand { CartID = activeCart.CartID, ProductID = productID };
             await mediator.Send(addItemCommand);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Remove(Guid productID)
+        {
+            var activeCart = await mediator.Send(new ActiveCartQuery());
+
+            var removeItemCommand = new RemoveItemFromCartCommand { CartID = activeCart.CartID, ProductID = productID };
+            await mediator.Send(removeItemCommand);
 
             return RedirectToAction(nameof(Index));
         }

@@ -14,13 +14,16 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Quantity) x
+                            @Html.DisplayFor(modelItem => item.Quantity) x 
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ProductID)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Price.Amount) @Html.DisplayFor(modelItem => item.Price.Currency)
+                        </td>
+                        <td>
+                            <a href="/Cart/Remove/?productID=@item.ProductID">Remove item</a>
                         </td>
                     </tr>
                 }
